@@ -1,0 +1,28 @@
+name: CI – Tests                     # (1) Name, der im Actions-Tab angezeigt wird
+
+on:                                  # (2) Wann soll das laufen?
+  push:
+    branches: [main]                 #     bei Push auf main
+  pull_request:
+    branches: [main]                 #     bei PRs, die in main sollen
+
+permissions:
+  contents: read                     # (3) Der Workflow darf den Code nur lesen, nichts ändern
+
+jobs:
+  test:                              # Name des Jobs (frei wählbar)
+    runs-on: ubuntu-latest           # (4) Runner: Linux-Maschine von GitHub
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v7    # (5) holt deinen Code auf den Runner
+
+      - name: Python einrichten
+        uses: actions/setup-python@v7   # (6) installiert Python
+        with:
+          python-version: '3.13'
+
+      - name: Abhängigkeiten installieren
+        run: python -m pip install -r requirements-dev.txt   # (7) installiert pytest
+
+      - name: Tests ausführen
+        run: python -m pytest -q     # (8) startet die Tests
