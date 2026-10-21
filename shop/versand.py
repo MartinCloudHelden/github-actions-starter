@@ -12,7 +12,7 @@ def versandkosten(warenwert: Decimal) -> Decimal:
     if warenwert < 0:
         raise ValueError("Der Warenwert darf nicht negativ sein.")
 
-    if warenwert > VERSANDFREI_AB:
+    if warenwert >= VERSANDFREI_AB:
         return Decimal("0.00")
     return VERSANDPAUSCHALE
 
